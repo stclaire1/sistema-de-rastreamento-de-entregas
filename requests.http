@@ -1,0 +1,87 @@
+# Entidade Pacote
+#---------------------------
+
+###
+GET /pacotes 
+Host: http://localhost:8080
+
+###
+POST /pacotes
+Host: http://localhost:8080
+Content-Type: application/json
+
+{
+	//criar um codigo com 11 caracteres com letras apenas
+		"idUnico": "ABCD1234567",
+		"destinatario": "Hermenegildo Silva",
+		"endereco": {
+			"id":1
+		},
+		"staus": "pendente"
+}
+
+
+###
+GET /pacotes/1 
+Host: http://localhost:8080
+
+
+###
+PUT /pacotes/1
+Host: http://localhost:8080
+Content-Type: application/json
+
+{
+	"destinatario": "Hermenegildo Silva",
+	"endereco": {
+		"id":1
+	},
+	"staus": "em trânsito"
+}	 
+
+###
+PUT /pacotes/1
+Host: http://localhost:8080
+Content-Type: application/json
+
+{
+	"destinatario": "Hermenegildo Silva",
+	"endereco": {
+		"id":1
+	},
+	"staus": "entregue"
+}	 
+
+###
+DELETE /pacotes/1
+Host: http://localhost:8080
+
+
+# Entidade Rastreamento
+#---------------------------
+
+###
+GET /rastreamentos/1
+Host: http://localhost:8080
+
+
+
+# Entidade Endereco
+#---------------------------
+
+###
+GET /enderecos
+Host: http://localhost:8080
+
+###
+POST /enderecos
+Host: http://localhost:8080
+Content-Type: application/json
+
+{
+	"rua": "Rua das Flores",
+	"numero": 123,
+	"cidade": "São Paulo",
+	"estado": "SP",
+	"cep": "12345-678"
+}
