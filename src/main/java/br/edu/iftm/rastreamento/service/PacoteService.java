@@ -7,15 +7,21 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.iftm.rastreamento.model.Pacote;
+import br.edu.iftm.rastreamento.model.Rastreamento;
 import br.edu.iftm.rastreamento.repository.PacoteRepository;
+import br.edu.iftm.rastreamento.repository.RastreamentoRepository;
 
 @Service
 public class PacoteService {
 
     @Autowired
     private PacoteRepository pacoteRepository;
+
+    @Autowired
+    private RastreamentoRepository rastreamentoRepository;
 
     public List<Pacote> getAllPacotes() {
         Iterable<Pacote> pacotesIterable = pacoteRepository.findAll();
@@ -36,6 +42,9 @@ public class PacoteService {
         Pacote pacote = pacoteRepository.findById(id).get();
         pacote.setId(id);
         pacote.atualizarStatus(pacoteDetails.getStatus(), Date.from(Instant.now()), "não implementado");
+        //obter o ultimo rastreamento
+        Rastreamento ultiRastreamento = pacote.getRastreamentos().get(pacote.getRastreamentos().size() - 1);
+        rastreamentoRepository.save(ultiRastreamento);
         return pacoteRepository.save(pacote);
     }
 

@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iftm.rastreamento.model.Rastreamento;
 import br.edu.iftm.rastreamento.service.RastreamentoService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/pacotes")
+@RequestMapping("/rastreamentos")
 public class RastreamentoController {
 
 	@Autowired
 	private RastreamentoService rastreamentoService;
 
 	@GetMapping("/{id}")
-	public Rastreamento getPacoteById(@PathVariable Long id) {
-		return rastreamentoService.getRastreamentoById(id);
+	public List<Rastreamento> getRastreamentosPacote(@PathVariable Long id) {
+		return rastreamentoService.getRastreamentos(id);
 	}
 
 }

@@ -13,12 +13,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "rastreamentos")
 @Entity
+@ToString(exclude = "rastreamentos")
 public class Pacote {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,7 @@ public class Pacote {
 	@ManyToOne
 	private Endereco endereco;
 	private String status;
-	@OneToMany(mappedBy = "pacote")
+	@OneToMany
 	private List<Rastreamento> rastreamentos;
 
 	public void atualizarStatus(String novoStatus, Date dataHora, String localizacao) {
@@ -39,5 +41,15 @@ public class Pacote {
 		rastreamento.setLocalizacao(localizacao);
 		rastreamento.setStatus(novoStatus);
 		rastreamentos.add(rastreamento);
+	}
+
+	public String consultarInformacoes() {
+		StringBuilder sb = new StringBuilder();
+		for (Rastreamento r : rastreamentos) {
+			sb.append(r.getResumo());
+			sb.append("\n");
+		}
+		return "Pacote [id=" + id + ", idUnico=" + idUnico + ", destinatario=" + destinatario + ", endereco=" + endereco
+				+ ", status=" + status + ", rastreamentos=" + sb.toString() + "]";
 	}
 }

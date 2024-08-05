@@ -1,81 +1,75 @@
-# Entidade Pacote
+# Pacote
 #---------------------------
 
 ###
-GET /pacotes 
-Host: http://localhost:8080
+GET /pacotes
+Host: localhost:8080
 
 ###
 POST /pacotes
-Host: http://localhost:8080
+Host: localhost:8080
 Content-Type: application/json
 
 {
-	//criar um codigo com 11 caracteres com letras apenas
 		"idUnico": "ABCD1234567",
 		"destinatario": "Hermenegildo Silva",
 		"endereco": {
 			"id":1
 		},
-		"staus": "pendente"
+		"status": "pendente"
 }
 
 
 ###
-GET /pacotes/1 
-Host: http://localhost:8080
+GET /pacotes/2
+Host: localhost:8080
 
 
 ###
 PUT /pacotes/1
-Host: http://localhost:8080
+Host: localhost:8080
 Content-Type: application/json
 
 {
-	"destinatario": "Hermenegildo Silva",
-	"endereco": {
-		"id":1
-	},
-	"staus": "em trânsito"
+	"status": "em trânsito"
 }	 
 
 ###
-PUT /pacotes/1
-Host: http://localhost:8080
+PUT /pacotes/2
+Host: localhost:8080
 Content-Type: application/json
 
 {
-	"destinatario": "Hermenegildo Silva",
-	"endereco": {
-		"id":1
-	},
-	"staus": "entregue"
+	"status": "teste"
 }	 
 
 ###
 DELETE /pacotes/1
-Host: http://localhost:8080
+Host: localhost:8080
 
 
-# Entidade Rastreamento
-#---------------------------
+
+
+# Rastreamento
+#----------------------------------------------------
 
 ###
 GET /rastreamentos/1
-Host: http://localhost:8080
+Host: localhost:8080
 
 
 
-# Entidade Endereco
-#---------------------------
+
+# Endereco
+#--------------------------------------------------------
 
 ###
 GET /enderecos
-Host: http://localhost:8080
+Host: localhost:8080
 
 ###
 POST /enderecos
-Host: http://localhost:8080
+Host: localhost:8080
 Content-Type: application/json
 
 {
