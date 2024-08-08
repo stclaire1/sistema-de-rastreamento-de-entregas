@@ -1,5 +1,6 @@
 package br.edu.iftm.rastreamento.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class Pacote {
 	private Endereco endereco;
 	private String status;
 	@OneToMany
-	private List<Rastreamento> rastreamentos;
+	private List<Rastreamento> rastreamentos = new ArrayList<>();
 
 	public void atualizarStatus(String novoStatus, Date dataHora, String localizacao) {
 		this.status = novoStatus;

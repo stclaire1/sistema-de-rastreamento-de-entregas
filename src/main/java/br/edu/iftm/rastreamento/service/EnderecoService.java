@@ -2,13 +2,16 @@ package br.edu.iftm.rastreamento.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.iftm.rastreamento.dto.EnderecoDTO;
 import br.edu.iftm.rastreamento.model.Endereco;
 import br.edu.iftm.rastreamento.repository.EnderecoRepository;
+import br.edu.iftm.rastreamento.service.exceptions.NaoAcheiException;
+import br.edu.iftm.rastreamento.service.util.Converters;
 
 @Service
 public class EnderecoService {
@@ -16,32 +19,32 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
-	public List<Endereco> getAllEnderecos() {
+	@Autowired
+	private Converters converters;
+
+	public List<EnderecoDTO> getAllEnderecos() {
 		Iterable<Endereco> enderecosIterable = enderecoRepository.findAll();
 		List<Endereco> enderecosList = new ArrayList<>();
 		enderecosIterable.forEach(enderecosList::add);
-		return enderecosList;
+		return enderecosList.stream().map((end) -> converters.convertToDTO(end)).collect(Collectors.toList());
 	}
 
-	public Optional<Endereco> getEnderecoById(Long id) {
-		return enderecoRepository.findById(id);
+	public EnderecoDTO getEnderecoById(Long id) {
+		Endereco endereco = enderecoRepository.findById(id).orElseThrow(() -> new NaoAcheiException("Endereco não encontrado"));
+		return converters.convertToDTO(endereco);
 	}
 
-	public Endereco createEndereco(Endereco endereco) {
-		return enderecoRepository.save(endereco);
+	public EnderecoDTO createEndereco(EnderecoDTO enderecoDTO) {
+		Endereco endereco = converters.convertToEntity(enderecoDTO);
+		Endereco savedEndereco = enderecoRepository.save(endereco);
+		return converters.convertToDTO(savedEndereco);
 	}
 
-	public Endereco updateEndereco(Long id, Endereco enderecoDetails) {
-		Endereco endereco = enderecoRepository.findById(id).get();
-		endereco.setRua(enderecoDetails.getRua());
-		endereco.setCidade(enderecoDetails.getCidade());
-		endereco.setEstado(enderecoDetails.getEstado());
-		endereco.setCep(enderecoDetails.getCep());
-		return enderecoRepository.save(endereco);
+	public EnderecoDTO updateEndereco(Long id, EnderecoDTO enderecoDTO) {
+		Endereco endereco = converters.convertToEntity(enderecoDTO);
+		endereco.setId(id);
+		Endereco updatedEndereco = enderecoRepository.save(endereco);
+		return converters.convertToDTO(updatedEndereco);
 	}
 
-	public void deleteEndereco(Long id) {
-		Endereco endereco = enderecoRepository.findById(id).get();
-		enderecoRepository.delete(endereco);
-	}
 }
