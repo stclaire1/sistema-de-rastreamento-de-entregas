@@ -14,11 +14,10 @@ Content-Type: application/json
 		"idUnico": "ABCD1234567",
 		"destinatario": "Hermenegildo Silva",
 		"endereco": {
-			"id":1
+			"id":2
 		},
 		"status": "pendente"
 }
-
 
 ###
 GET /pacotes/2
@@ -26,7 +25,7 @@ Host: localhost:8080
 
 
 ###
-PUT /pacotes/1
+PUT /pacotes/2
 Host: localhost:8080
 Content-Type: application/json
 
@@ -44,27 +43,21 @@ Content-Type: application/json
 }	 
 
 ###
-DELETE /pacotes/1
+DELETE /pacotes/2
 Host: localhost:8080
-
-
 
 
 # Rastreamento
 #----------------------------------------------------
-
 ###
-GET /rastreamentos/1
+GET /rastreamentos/2
 Host: localhost:8080
-
-
 
 
 # Endereco
 #--------------------------------------------------------
-
 ###
-GET /enderecos
+GET /enderecos/11
 Host: localhost:8080
 
 ###
