@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iftm.rastreamento.model.Pacote;
@@ -77,5 +78,25 @@ public class PacoteController {
 	@DeleteMapping("/{id}")
 	public void deletePacote(@PathVariable Long id) {
 		pacoteService.deletePacote(id);
+	}
+
+	@Operation(summary = "Retorna todos os pacotes pelo status")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Lista de pacotes retornada com sucesso", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Pacote.class))}),
+		@ApiResponse(responseCode = "204", description = "Nenhum pacote com esse status foi encontrado")
+	})
+	@GetMapping("/status")
+	public List<Pacote> getPacotesByStatus(@RequestParam String status) {
+		return pacoteService.getPacotesByStatus(status);
+	}
+
+	@Operation(summary = "Retorna todos os pacotes pelo destinatário")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Lista de pacotes retornada com sucesso", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Pacote.class))}),
+		@ApiResponse(responseCode = "204", description = "Nenhum pacote com esse destinatário foi encontrado")
+	})
+	@GetMapping("/destinatario")
+	public List<Pacote> getPacotesByDestinatario(@RequestParam String destinatario) {
+		return pacoteService.getPacotesByDestinatario(destinatario);
 	}
 }
