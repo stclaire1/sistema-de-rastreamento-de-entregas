@@ -32,7 +32,7 @@ public class PacoteService {
 
     public Pacote getPacoteById(Long id) {
         return pacoteRepository.findById(id)
-                .orElseThrow(() -> new NaoAcheiException("Pacote com ID" + id + " não encontrado"));
+                .orElseThrow(() -> new NaoAcheiException("Pacote com ID " + id + " não encontrado"));
     }
 
     public Pacote createPacote(Pacote pacote) {
@@ -41,7 +41,7 @@ public class PacoteService {
 
     public Pacote updatePacote(Long id, Pacote pacoteDetails) {
         Pacote pacote = pacoteRepository.findById(id)
-            .orElseThrow(() -> new NaoAcheiException("Pacote com ID" + id + " não encontrado"));
+            .orElseThrow(() -> new NaoAcheiException("Pacote com ID " + id + " não encontrado"));
     
         pacote.setId(id);
         pacote.atualizarStatus(pacoteDetails.getStatus(), Date.from(Instant.now()), "não implementado");
@@ -55,5 +55,21 @@ public class PacoteService {
     public void deletePacote(Long id) {
         Pacote pacote = pacoteRepository.findById(id).get();
         pacoteRepository.delete(pacote);
+    }
+
+    // Novos métodos
+
+    public List<Pacote> getPacotesByStatus(String status) {
+        Iterable<Pacote> pacotesIterable = pacoteRepository.findByStatus(status);
+        List<Pacote> pacotesList = new ArrayList<>();
+        pacotesIterable.forEach(pacotesList::add);
+        return pacotesList;
+    }
+
+    public List<Pacote> getPacotesByDestinatario(String destinatario) {
+        Iterable<Pacote> pacotesIterable = pacoteRepository.findByDestinatario(destinatario);
+        List<Pacote> pacotesList = new ArrayList<>();
+        pacotesIterable.forEach(pacotesList::add);
+        return pacotesList;
     }
 }
